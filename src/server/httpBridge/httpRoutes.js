@@ -1,7 +1,7 @@
 'use strict'
 
 const eventEmitter  = require ('../eventBridge');
-const allowedRoutes = require ('../config/allowedRoutes.json');
+const allowedRoutes = require ('../../config/allowedRoutes.json');
 
 const httpRoutes = (data, path) => {
 	

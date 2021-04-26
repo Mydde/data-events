@@ -1,6 +1,6 @@
 "use strict";
 
-const config         = require ('../config/config');
+const config         = require ('../../config/config');
 const request        = require ('request');
 const socketIO       = require ('socket.io');
 const socketThrottle = require ('./socketThrottle');
@@ -43,6 +43,7 @@ class socketEmitter {
 	 * init onConnection event listener
 	 */
 	listenConnectionEvents() {
+		this.debug('listenConnectionEvents')
 		this.io.on ('connection', (socket) => {
 			this.debug ('socket connected')
 			

@@ -1,9 +1,19 @@
-'use strict'
+"use strict";
 
-const parseArgs = require ('minimist')
-const argv      = parseArgs (process.argv)
+const parseArgs = require("minimist");
+const argv = parseArgs(process.argv);
 
-const socketEvent = require ('./src/socketEvent.js');
+const socketEvent = require("./src/server/dataEvents.js");
 
-socketEvent.setPort (argv.p || 3005);
-socketEvent.init ();
+function start() {
+  socketEvent.setPort(argv.port || 4000);
+  socketEvent.init();
+}
+ 
+console.log(argv['_']);
+
+if(argv['start']){
+    start()
+}
+
+module.exports = start;

@@ -1,5 +1,7 @@
 'use strict'
 
+// relay events between modules
+
 const EventEmitter = require('events').EventEmitter;
 const eventEmitter = new EventEmitter();
 

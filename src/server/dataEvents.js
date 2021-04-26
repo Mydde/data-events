@@ -1,6 +1,6 @@
 'use strict'
 
-const allowedRoutes = require ('./config/allowedRoutes.json');
+const allowedRoutes = require ('../config/allowedRoutes.json');
 const http          = require ('./httpBridge').http;
 const httpHandler   = require ('./httpBridge').httpHandler;
 const socketEmitter = require ('./socketBridge').socketEmitter;
@@ -24,8 +24,7 @@ class dataEvent {
 		}
 		this.app = http.createServer (httpHandler).listen (this.port);
 		this.io  = socketEmitter.init (this.app);
-		
-		// this.app.listen (this.port);
+		 
 		this.debug ('listening on port ' + this.port);
 		
 		this._eventEmitterListen ();
@@ -62,13 +61,16 @@ class dataEvent {
 			eventEmitter.on (eventRoute, (data) => {
 				if ( !data.payload ) {
 					this.debug ('dataEvent:PAYLOAD_MISSING');
-					throw new Error ('dataEvent:PAYLOAD_MISSING');
+					return;
+					// throw new Error ('dataEvent:PAYLOAD_MISSING');
 				}
 				if ( data.payload.roles ) {
 					this._eventEmitterDispatch (eventRoute, data);
 				}
 				else {
-					throw new Error ('dataEvent:PAYLOAD_ROLE_MISSING');
+					this.debug ('dataEvent:PAYLOAD_ROLE_MISSING');
+					return;
+					// throw new Error ('dataEvent:PAYLOAD_ROLE_MISSING');
 				}
 			});
 		})

@@ -2,7 +2,7 @@
 
 const socketEmitter  = require ('./socketEmitter');
 const socketThrottle = require ('./socketThrottle');
-const socketRoom     = require ('./socket_room');
+const socketRoom     = require ('./socketRoom');
 
 module.exports = {
 	socketEmitter,
