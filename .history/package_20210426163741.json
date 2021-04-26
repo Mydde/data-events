@@ -1,0 +1,25 @@
+{
+	"name": "data-notifier",
+	"version": "0.0.0",
+	"description": "Post to socket embitter application",
+	"main": "src/socketEvent.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "nodemon   ./src/index",
+		"watch": ""
+	},
+	"repository": {
+		"type": "git",
+		"url": "red@.git"
+	},
+	"author": "Lebrun Meddy",
+	"license": "ISC",
+	"dependencies": {
+		"chokidar": "^2.0.4",
+		"events": "^3.0.0",
+		"minimist": "^1.2.0",
+		"nodemon": "^1.18.9",
+		"npm-watch": "^0.5.0",
+		"socket.io": "^2.2.0"
+	}
+}
