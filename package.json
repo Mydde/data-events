@@ -5,7 +5,9 @@
 	"main": "./index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node   ./index.js   --start --p 3005 ",
+		"dev": "tsc --build --verbose --incremental --watch & node.exe -r ts-node/register ./src --port 4000",
+		"build": "tsc --build --verbose --incremental",
+		"start": "node.exe lib --port 4000",
 		"watch": ""
 	},
 	"repository": {
@@ -20,7 +22,13 @@
 		"nodemon": "^1.18.9",
 		"npm-watch": "^0.5.0",
 		"request": "^2.88.2",
-		"socket.io": "^2.2.0",
-		"socket.io-client": "^4.0.1"
+		"socket.io": "^4.3.1",
+		"socket.io-client": "^4.3.2"
+	},
+	"devDependencies": {
+		"@types/node": "^16.11.4",
+		"@types/socket.io": "^3.0.2",
+		"ts-node": "^10.4.0",
+		"typescript": "^4.4.4"
 	}
 }

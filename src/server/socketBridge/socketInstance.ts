@@ -1,6 +1,6 @@
 const socketIO = require ('socket.io');
 
-const socketInstance = {
+export const socketInstance = {
 	_instance: null,
 	get instance () {
 		if (!this._instance) {

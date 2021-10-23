@@ -19,7 +19,9 @@ periodicallyPostFakeData ();
 function periodicallyPostFakeData() {
 	const delay = getRandomInt (30) * 1000;
 	postFakeData ();
-	console.log ('next in ' + delay)
+
+	console.log ('next in ' + delay);
+
 	setTimeout (() => {
 		periodicallyPostFakeData ();
 	}, delay)

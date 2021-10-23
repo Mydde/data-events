@@ -1,14 +1,21 @@
 'use strict'
 
+import { IReceivedData } from "../@types";
+import {Server} from 'net';
+import {eventBridgeEmitter} from './eventBridgeEmitter';
+
 const allowedRoutes = require ('../config/allowedRoutes.json');
 const http          = require ('./httpBridge').http;
 const httpHandler   = require ('./httpBridge').httpHandler;
 const socketEmitter = require ('./socketBridge').socketEmitter;
-const eventEmitter  = require ('./eventBridge');
 
-class dataEvent {
+class dataEventInstance {
+	options: any;
+	port!: number;
+	app!: Server;
+	io: any;
 	
-	constructor(vars, options) {
+	constructor(vars?: undefined, options?: undefined) {
 		this.options = Object.assign ({}, options || {})
 	}
 	
@@ -16,12 +23,12 @@ class dataEvent {
 	 *
 	 * @param  port integer
 	 */
-	init(port = null) {
+	init(port?:number) {
 		
-		this.port = port || this.port;
-		if ( !this.port ) {
-			throw new Error ('dataEvent:PORT_MISSING');
-		}
+		this.port = port ?? this.port;
+
+		if ( !this.port ) throw new Error ('dataEvent:PORT_MISSING');
+		// create server
 		this.app = http.createServer (httpHandler).listen (this.port);
 		this.io  = socketEmitter.init (this.app);
 		 
@@ -34,7 +41,7 @@ class dataEvent {
 	 *
 	 * @param  port integer
 	 */
-	setPort(port) {
+	setPort(port:number) {
 		this.port = port
 	}
 	
@@ -48,7 +55,7 @@ class dataEvent {
 	}
 	
 	/**
-	 * eventEmitter listen to all routes,
+	 * eventBridgeEmitter listen to all routes,
 	 * - receive data coming from httpRoutes
 	 * - emit data to connected sockets
 	 */
@@ -58,7 +65,7 @@ class dataEvent {
 			
 			this.debug ('now listening for eventRoute : ' + eventRoute);
 			
-			eventEmitter.on (eventRoute, (data) => {
+			eventBridgeEmitter.on (eventRoute, (data:IReceivedData) => {
 				if ( !data.payload ) {
 					this.debug ('dataEvent:PAYLOAD_MISSING');
 					return;
@@ -82,12 +89,12 @@ class dataEvent {
 	 * @param data object < data.payload >
 	 * @private
 	 */
-	_eventEmitterDispatch(eventRoute, data = {}) {
+	_eventEmitterDispatch(eventRoute: string, data:IReceivedData) {
 		
 		this.debug ('dispatch for ' + eventRoute);
 		// own : private request for one socket.id
 		if ( data.payload.own ) {
-			socketEmitter.emitToOwn (own, eventRoute, data);
+			socketEmitter.emitToOwn (data.payload.own, eventRoute, data);
 		}
 		else {
 			// send to each room / ROLE
@@ -98,11 +105,11 @@ class dataEvent {
 		}
 	}
 	
-	debug(...log) {
+	debug(...log: any) {
 		console.log ('dataEvent :' + this.port, ...log)
 	}
 	
 }
 
-const dataEventInstance = new   dataEvent ();
-module.exports            = dataEventInstance;
+export const socketDataEvent = new   dataEventInstance ();
+ 

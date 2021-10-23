@@ -1,6 +1,8 @@
 'use strict'
 
-class socketRooms {
+class socketRoomsInstance {
+    _sid: string;
+	private rooms: Record<string,any>;
 	
 	constructor() {
 		
@@ -15,11 +17,11 @@ class socketRooms {
 	
 	}
 	
-	createRoom(room) {
+	createRoom(room: string) {
 		if ( !this.rooms[room] ) this.rooms[room] = {}
 	}
 	
-	joinRoom(socketObj, room_name) {
+	joinRoom(socketObj: any, room_name: string) {
 		this.rooms[room_name][socketObj[this._sid]] = socketObj;
 		socketObj.join(room_name, () => {
 			let rooms = Object.keys(socketObj.rooms);
@@ -67,6 +69,5 @@ class socketRooms {
 	}
 }
 
-const socketRoom = new socketRooms ();
+export const socketRoom = new socketRoomsInstance ();
 
-module.exports = socketRoom
