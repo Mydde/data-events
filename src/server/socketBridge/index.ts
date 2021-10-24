@@ -1,10 +1,10 @@
 'use strict'
 import {socketRoom} from './socketRoom';
-import {socketEmitter} from './socketEmitter';
+import {socketIoServerInstance} from './socketIoServer';
 import {socketThrottle} from './socketThrottle';
 
-module.exports = {
-  socketEmitter,
+export {
+  socketIoServerInstance,
   socketRoom,
   socketThrottle
 }
